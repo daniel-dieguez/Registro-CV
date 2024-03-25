@@ -1,6 +1,6 @@
 package com.registor.registro.dao.services;
 
-import com.registor.registro.models.entities.IRegistroDao;
+import com.registor.registro.dao.IRegistroDao;
 import com.registor.registro.models.model.Registro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

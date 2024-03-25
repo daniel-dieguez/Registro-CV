@@ -1,7 +1,7 @@
 package com.registor.registro.controller;
 
 
-import com.registor.registro.dao.RegistroDto;
+import com.registor.registro.models.entities.RegistroDto;
 import com.registor.registro.dao.services.IRegistroServicesImp;
 import com.registor.registro.models.model.Registro;
 import jakarta.validation.Valid;
@@ -54,7 +54,7 @@ public class RegistroController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody RegistroDto value, BindingResult result){
+    public ResponseEntity<?> create(@Valid @RequestBody Registro value, BindingResult result){
         Map<String,Object> response = new HashMap<>();
         if(result.hasErrors() == true){
             List<String> errores = result.getFieldErrors().stream().map(error -> error.getDefaultMessage())
@@ -65,7 +65,15 @@ public class RegistroController {
         }try{
             Registro registro = new Registro();
             registro.setId_persona(UUID.randomUUID().toString());
-            registro.setNombre(value.);
+            registro.setNombre(value.getNombre());
+            registro.setEmail(value.getEmail());
+            registro.setComentario(value.getComentario());
+            this.iRegistroServicesImp.save(registro);
+            logger.info("Se registrado una nueva persona");
+            response.put("Mensaje", "Una nueva persona se registro con exito ");
+            response.put("Registro", "El registro se a realizado con exito ");
+            return new ResponseEntity<Map<String,Object>>(response, HttpStatus.CREATED);
+
 
         }catch (CannotCreateTransactionException e){
             response = this.getTransactionExepcion(response, e);

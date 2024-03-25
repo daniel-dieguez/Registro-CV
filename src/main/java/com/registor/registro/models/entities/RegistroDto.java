@@ -1,4 +1,4 @@
-package com.registor.registro.dao;
+package com.registor.registro.models.entities;
 
 
 import jakarta.validation.constraints.NotEmpty;
