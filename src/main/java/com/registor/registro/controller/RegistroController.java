@@ -22,13 +22,13 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = (" "))
+@RequestMapping(value = ("/registro/v1/cv"))
 public class RegistroController {
 
     @Autowired
     private IRegistroServicesImp iRegistroServicesImp;
 
-    private Logger logger = LoggerFactory.getLogger(RegistroController.class);
+    private Logger logger = LoggerFactory.getLogger(Registro.class);
 
     @GetMapping
     public ResponseEntity<?>Listado(){
@@ -55,12 +55,12 @@ public class RegistroController {
 
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody Registro value, BindingResult result){
-        Map<String,Object> response = new HashMap<>();
+        Map<String, Object> response = new HashMap<>();
         if(result.hasErrors() == true){
             List<String> errores = result.getFieldErrors().stream().map(error -> error.getDefaultMessage())
-                    .collect(Collectors.toList());
+                    .collect(Collectors.toList()); // getFielError me enlistara los campos que se encuentraron errores, El collector nos ayuda a enlistar lso errorres PREGUNTAR A CHATGPT
             response.put("errores", errores);
-            logger.info("Se encontraron errores al momento de validar");
+            logger.info("se encontraron errores al momento de validar");
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }try{
             Registro registro = new Registro();
@@ -71,10 +71,8 @@ public class RegistroController {
             this.iRegistroServicesImp.save(registro);
             logger.info("Se registrado una nueva persona");
             response.put("Mensaje", "Una nueva persona se registro con exito ");
-            response.put("Registro", "El registro se a realizado con exito ");
+            response.put("Registro", registro);
             return new ResponseEntity<Map<String,Object>>(response, HttpStatus.CREATED);
-
-
         }catch (CannotCreateTransactionException e){
             response = this.getTransactionExepcion(response, e);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
@@ -85,6 +83,7 @@ public class RegistroController {
         }
 
     }
+
 
 
     private Map<String, Object> getTransactionExepcion(Map<String,Object> response, CannotCreateTransactionException e){

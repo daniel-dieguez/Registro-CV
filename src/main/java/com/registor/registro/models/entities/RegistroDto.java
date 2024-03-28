@@ -14,5 +14,5 @@ import java.io.Serializable;
 public class RegistroDto  implements Serializable {
 
     @NotEmpty(message = "Este campo debe de estar lleno ")
-    private String registro;
+    private String registroDB;
 }

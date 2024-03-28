@@ -8,4 +8,5 @@ public interface IRegistroServicesImp {
 
     public List<Registro> findAll();
     public Registro save (Registro registro);
+    public void delete(Registro registro);
 }

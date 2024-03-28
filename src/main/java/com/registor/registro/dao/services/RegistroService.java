@@ -22,4 +22,10 @@ public class RegistroService implements IRegistroServicesImp{
     public Registro save(Registro registro) {
         return this.iRegistroDao.save(registro);
     }
+
+    @Override
+    public void delete(Registro registro) {
+        this.iRegistroDao.delete(registro);
+
+    }
 }

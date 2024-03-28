@@ -13,8 +13,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "RegistroDB")
 @Entity
-@Table(name = "registro")
 public class Registro implements Serializable {
 
     @Id
