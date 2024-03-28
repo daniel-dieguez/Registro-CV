@@ -87,7 +87,7 @@ public class RegistroController {
 
 
     private Map<String, Object> getTransactionExepcion(Map<String,Object> response, CannotCreateTransactionException e){
-        logger.error("Error al momento de conectarse a la base de datos");
+        logger.error("Error al momento de conectarse a la base de datoss");
         response.put("mensajee", "error al moneotno de contectarse a la");
         response.put("error", e.getMessage().concat(":").concat(e.getMostSpecificCause().getMessage()));
         return response;
