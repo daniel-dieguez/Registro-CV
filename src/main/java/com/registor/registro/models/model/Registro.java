@@ -13,7 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "RegistroDB")
+@Table(name = "registroDB")
 @Entity
 public class Registro implements Serializable {
 

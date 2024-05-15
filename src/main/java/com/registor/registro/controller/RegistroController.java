@@ -1,9 +1,9 @@
 package com.registor.registro.controller;
 
 
-import com.registor.registro.models.entities.RegistroDto;
 import com.registor.registro.dao.services.IRegistroServicesImp;
 import com.registor.registro.models.model.Registro;
+import com.registor.registro.newEmailRegister.domain.AuthenticateEmail;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +22,22 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = ("/registro/v1/cv"))
+@RequestMapping(value = "/registro/v1/cv")
+@CrossOrigin(origins = "*") // para poder dar permiso y uitlizarlo
 public class RegistroController {
 
     @Autowired
     private IRegistroServicesImp iRegistroServicesImp;
 
     private Logger logger = LoggerFactory.getLogger(Registro.class);
+
+    // correo
+
+    AuthenticateEmail authenticateEmail;
+
+    public RegistroController(AuthenticateEmail authenticateEmail) {
+        this.authenticateEmail = authenticateEmail;
+    }
 
     @GetMapping
     public ResponseEntity<?>Listado(){
@@ -72,7 +81,14 @@ public class RegistroController {
             logger.info("Se registrado una nueva persona");
             response.put("Mensaje", "Una nueva persona se registro con exito ");
             response.put("Registro", registro);
+
+            //correo
+            authenticateEmail.sendMessageUser( registro.getEmail(), registro.getNombre());
+            logger.info("se envio un correo");
+            response.put("mensaje","Se envio con exito el correo");
+
             return new ResponseEntity<Map<String,Object>>(response, HttpStatus.CREATED);
+
         }catch (CannotCreateTransactionException e){
             response = this.getTransactionExepcion(response, e);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
