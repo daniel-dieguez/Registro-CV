@@ -3,7 +3,7 @@ package com.registor.registro.controller;
 
 import com.registor.registro.dao.services.IRegistroServicesImp;
 import com.registor.registro.models.model.Registro;
-import com.registor.registro.newEmailRegister.domain.AuthenticateEmail;
+import com.registor.registro.newEmailRegister.infa.MailManager;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,11 +33,11 @@ public class RegistroController {
 
     // correo
 
-    AuthenticateEmail authenticateEmail;
+    @Autowired
+    MailManager mailManager;
+    //AuthenticateEmail authenticateEmail;
 
-    public RegistroController(AuthenticateEmail authenticateEmail) {
-        this.authenticateEmail = authenticateEmail;
-    }
+
 
     @GetMapping
     public ResponseEntity<?>Listado(){
@@ -62,8 +62,9 @@ public class RegistroController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/registro")
     public ResponseEntity<?> create(@Valid @RequestBody Registro value, BindingResult result){
+
         Map<String, Object> response = new HashMap<>();
         if(result.hasErrors() == true){
             List<String> errores = result.getFieldErrors().stream().map(error -> error.getDefaultMessage())
@@ -74,16 +75,14 @@ public class RegistroController {
         }try{
             Registro registro = new Registro();
             registro.setId_persona(UUID.randomUUID().toString());
-            registro.setNombre(value.getNombre());
-            registro.setEmail(value.getEmail());
-            registro.setComentario(value.getComentario());
+            registro.setNombre_usuario(value.getNombre_usuario());
+            registro.setEmail_usuario(value.getEmail_usuario());
+            registro.setComentario_usuario(value.getComentario_usuario());
+            mailManager.sendMessage(registro.getEmail_usuario(), registro.getNombre_usuario(), registro.getComentario_usuario());
             this.iRegistroServicesImp.save(registro);
             logger.info("Se registrado una nueva persona");
             response.put("Mensaje", "Una nueva persona se registro con exito ");
             response.put("Registro", registro);
-
-            //correo
-            authenticateEmail.sendMessageUser( registro.getEmail(), registro.getNombre());
             logger.info("se envio un correo");
             response.put("mensaje","Se envio con exito el correo");
 

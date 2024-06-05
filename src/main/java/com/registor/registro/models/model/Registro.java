@@ -13,19 +13,19 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "registroDB")
+@Table(name = "registrodb")
 @Entity
 public class Registro implements Serializable {
 
     @Id
     @Column(name = "id_persona")
     private String id_persona;
-    @Column(name = "nombre")
-    private String nombre;
-    @Column(name = "email")
-    private String email;
-    @Column(name = "comentario")
-    private String comentario;
+    @Column(name = "nombre_usuario")
+    private String nombre_usuario;
+    @Column(name = "email_usuario")
+    private String email_usuario;
+    @Column(name = "comentario_usuario")
+    private String comentario_usuario;
 
 
 }
