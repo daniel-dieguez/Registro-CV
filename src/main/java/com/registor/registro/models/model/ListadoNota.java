@@ -14,7 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "listadonotas")
+@Table(name = "notaslistas")
 @Entity
 public class ListadoNota implements Serializable {
 

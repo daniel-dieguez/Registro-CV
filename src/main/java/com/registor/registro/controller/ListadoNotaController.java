@@ -29,12 +29,11 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*") // para poder dar permiso y uitlizarlo
 public class ListadoNotaController {
 
-    //private final RabbitTemplate queuesender;
 
     @Autowired
     private IListadoNotasServicesImpl iListadoNotasServices;
 
-    private Logger logger = LoggerFactory.getLogger(ListadoNotaController.class);
+    private Logger logger = LoggerFactory.getLogger(ListadoNota.class);
 
 
 
@@ -146,13 +145,13 @@ public class ListadoNotaController {
 
     ///---------------------------------
 
-    @PutMapping(" {listadoId}")
+    @PutMapping("/{listadoId}")
     public ResponseEntity<?>update(@Valid @RequestBody ListadoNotasDTO value, BindingResult result, @PathVariable String listadoId){
         Map<String, Object> response = new HashMap<>();
         if(result.hasErrors()){
             List<String> errores = result.getFieldErrors().stream().map(error -> error.getDefaultMessage()).collect(Collectors.toList());
             response.put("eorrres", errores);
-            logger.info("Se encotraron errores en la peticion ");
+            logger.info("Se encotraron errores en la peticion en la peticion de repetiaciones ");
             return new ResponseEntity<Map<String,Object>>(response, HttpStatus.BAD_REQUEST);
         }
         try{
