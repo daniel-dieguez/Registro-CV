@@ -22,7 +22,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/registro/v1/cv")
+@RequestMapping(value = "/contacto")
 @CrossOrigin(origins = "*") // para poder dar permiso y uitlizarlo
 public class RegistroController {
 
@@ -39,7 +39,7 @@ public class RegistroController {
 
 
 
-    @GetMapping
+    @GetMapping("/mensajes")
     public ResponseEntity<?>Listado(){
         Map<String, Object> response = new HashMap<>();
         this.logger.debug("Inicio de consulta");
@@ -62,7 +62,7 @@ public class RegistroController {
         }
     }
 
-    @PostMapping("/registro")
+    @PostMapping("/sendEmail")
     public ResponseEntity<?> create(@Valid @RequestBody Registro value, BindingResult result){
 
         Map<String, Object> response = new HashMap<>();

@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping (value = "/lista/tareas")
+@RequestMapping (value = "/task")
 @CrossOrigin(origins = "*") // para poder dar permiso y uitlizarlo
 public class ListadoNotaController {
 
@@ -37,7 +37,7 @@ public class ListadoNotaController {
 
 
 
-    @GetMapping
+    @GetMapping("/viewAll")
     public ResponseEntity<?>ListaNotas(){
         Map<String, Object> response = new HashMap<>();
         this.logger.debug("iniciando consulta");
@@ -85,7 +85,7 @@ public class ListadoNotaController {
         }
     }
 
-    @GetMapping("{listadoId}")
+    @GetMapping("/{listadoId}")
     public  ResponseEntity<?> showlistado(@PathVariable String listadoId){ //VERIFIQUEMOS ESTE DATO
         Map<String, Object> response = new HashMap<>();
         logger.debug("inica el proceso para la busqueda del Id".concat(listadoId));
@@ -112,7 +112,7 @@ public class ListadoNotaController {
     }
 
 
-    @PostMapping  //recuerda que el post es para agregar
+    @PostMapping("/create") //recuerda que el post es para agregar
     public ResponseEntity<?> create (@Valid @RequestBody ListadoNotasDTO value, BindingResult result){//el bindingresulta para valdiad el campo de Dto //el body lo podremos ver en la parte del post
         Map<String, Object> response = new HashMap<>();
         if(result.hasErrors() == true){ //.hasError para ver los errores
@@ -181,7 +181,7 @@ public class ListadoNotaController {
 
 
 
-    @DeleteMapping("/{listadoId}")
+    @DeleteMapping("/delete/{listadoId}")
     public ResponseEntity<?> delete(@PathVariable String listadoId){
         Map<String, Object> response = new HashMap<>();
         try {
